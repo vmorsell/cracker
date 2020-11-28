@@ -66,7 +66,7 @@ func (b *Bruteforce) Crack(hash []byte, s *Strategy) *Result {
 		}
 
 		// Build children and append to queue
-		for _, v := range lowercase {
+		for _, v := range chars {
 			child := make([]byte, len(curr)+1)
 			copy(child, append(curr, v))
 			queue = append(queue, child)
