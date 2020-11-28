@@ -35,11 +35,11 @@ $ cracker bf --hf db.csv --lc --n --max 5
 To view available commands and general help:
 
 ```
-$ cracker help
+$ cracker --help
 ```
 
 To view documentation for a specific command:
 
 ```
-$ cracker <command> help
+$ cracker <command> --help
 ```
