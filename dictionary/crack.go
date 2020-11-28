@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"time"
 
-	"github.com/vmorsell/cracker-poc/cipherlib"
+	"github.com/vmorsell/cracker/cipherlib"
 )
 
 type Strategy struct {
