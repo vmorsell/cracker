@@ -52,9 +52,8 @@ func (ds *Dataset) HasNext() bool {
 }
 
 type Item struct {
-	Username string
-	Hash     []byte
-	Salt     []byte
+	Hash []byte
+	Salt []byte
 }
 
 func (ds *Dataset) Next() (*Item, error) {
@@ -68,16 +67,15 @@ func (ds *Dataset) Next() (*Item, error) {
 
 	record := bytes.Split(line, delimiter)
 
-	hash, err := decodeHex(record[1])
+	hash, err := decodeHex(record[0])
 	if err != nil {
 		return nil, fmt.Errorf("decodeHex: %w", err)
 	}
 
 	ds.LinesRead++
 	return &Item{
-		Username: string(record[0]),
-		Hash:     hash,
-		Salt:     record[2],
+		Hash: hash,
+		Salt: record[1],
 	}, nil
 }
 
