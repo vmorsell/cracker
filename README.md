@@ -6,7 +6,7 @@
 
 ### Requirements
 
-Cracker needs Go to run. Install Go using the [official instructions](https://golang.org/doc/install).
+Cracker needs Go to run. Install using the [official instructions](https://golang.org/doc/install).
 
 ### Installation
 
@@ -21,14 +21,16 @@ $ go get github.com/vmorsell/cracker
 All commands has the following structure:
 
 ```
-$ cracker [global options] command [command options] [arguments...]
+$ cracker <command> [command options]
 ```
 
 For example, brute force cracking a file of passwords named db.csv with combinations of lowercase letters and numbers with a length of max 5 is done with the following command:
 
 ```
-$ cracker bf --hf db.csv --lowercase --numbers --max-length 5
+$ cracker bf --hf db.csv --lc --n --max 5
 ```
+
+### Documentation
 
 To view available commands and general help:
 
