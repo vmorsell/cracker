@@ -9,7 +9,7 @@ import (
 )
 
 type Interface interface {
-	Crack(hash []byte, s *Strategy) *Result
+	Crack(hash []byte, salt []byte, s *Strategy) *Result
 }
 
 type Dictionary struct {

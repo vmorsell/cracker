@@ -1,7 +1,7 @@
 package bruteforce
 
 type Interface interface {
-	Crack(in []byte, s *Strategy) *Result
+	Crack(hash []byte, salt []byte, s *Strategy) *Result
 }
 
 type Bruteforce struct{}

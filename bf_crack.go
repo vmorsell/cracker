@@ -74,7 +74,7 @@ var bfCrack = &cli.Command{
 			}
 
 			fmt.Printf("%s     ", shortHash(item.Hash))
-			res := bf.Crack(item.Hash, s)
+			res := bf.Crack(item.Hash, item.Salt, s)
 			if !res.Ok {
 				fmt.Println("no match")
 				continue

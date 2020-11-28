@@ -48,18 +48,19 @@ func (ds *Dataset) HasNext() bool {
 	if err != nil {
 		return false
 	}
+	ds.file.Close()
 	return true
 }
 
 type Item struct {
-	Username string
-	Hash     []byte
-	Salt     []byte
+	Hash []byte
+	Salt []byte
 }
 
 func (ds *Dataset) Next() (*Item, error) {
 	line, _, err := ds.reader.ReadLine()
 	if err == io.EOF {
+		ds.file.Close()
 		return nil, err
 	}
 	if err != nil {
@@ -68,16 +69,23 @@ func (ds *Dataset) Next() (*Item, error) {
 
 	record := bytes.Split(line, delimiter)
 
-	hash, err := decodeHex(record[1])
+	var hexHash, salt []byte
+	hexHash = record[0]
+
+	// Use salt if present in the dataset
+	if len(record) == 2 {
+		salt = record[1]
+	}
+
+	hash, err := decodeHex(hexHash)
 	if err != nil {
 		return nil, fmt.Errorf("decodeHex: %w", err)
 	}
 
 	ds.LinesRead++
 	return &Item{
-		Username: string(record[0]),
-		Hash:     hash,
-		Salt:     record[2],
+		Hash: hash,
+		Salt: salt,
 	}, nil
 }
 
