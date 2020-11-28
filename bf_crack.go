@@ -24,6 +24,10 @@ var bfCrack = &cli.Command{
 			Aliases: []string{"max"},
 			Value:   4,
 		},
+		&cli.IntFlag{
+			Name:    "min-length",
+			Aliases: []string{"min"},
+		},
 		&cli.StringFlag{
 			Name:  "cipher",
 			Value: "sha256",
@@ -31,7 +35,6 @@ var bfCrack = &cli.Command{
 		&cli.BoolFlag{
 			Name:    "lowercase",
 			Aliases: []string{"lc"},
-			Value:   true,
 		},
 		&cli.BoolFlag{
 			Name:    "uppercase",
@@ -63,6 +66,7 @@ var bfCrack = &cli.Command{
 			Lowercase: c.Bool("lowercase"),
 			Numbers:   c.Bool("numbers"),
 			Special:   c.Bool("special"),
+			Min:       c.Int("min-length"),
 			Max:       c.Int("max-length"),
 		}
 

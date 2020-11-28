@@ -20,6 +20,7 @@ type Strategy struct {
 	Uppercase bool
 	Numbers   bool
 	Special   bool
+	Min       int
 	Max       int
 }
 
@@ -51,18 +52,21 @@ func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	queue := [][]byte{}
 	var curr []byte
 
-	i := 1
+	i := 0
 	for {
-		salted := append(curr, salt...)
-		x := s.Cipher.Hash(salted)
-		if bytes.Equal(hash, x) {
-			time := time.Now().Sub(start)
-			return &Result{
-				Ok:       true,
-				Hash:     hash,
-				Password: curr,
-				Tries:    i,
-				Time:     time,
+		if len(curr) >= s.Min {
+			i++
+			salted := append(curr, salt...)
+			x := s.Cipher.Hash(salted)
+			if bytes.Equal(hash, x) {
+				time := time.Now().Sub(start)
+				return &Result{
+					Ok:       true,
+					Hash:     hash,
+					Password: curr,
+					Tries:    i,
+					Time:     time,
+				}
 			}
 		}
 
@@ -85,8 +89,6 @@ func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 		if len(curr) > s.Max {
 			break
 		}
-
-		i++
 	}
 
 	// No match
