@@ -48,6 +48,7 @@ func (ds *Dataset) HasNext() bool {
 	if err != nil {
 		return false
 	}
+	ds.file.Close()
 	return true
 }
 
@@ -59,6 +60,7 @@ type Item struct {
 func (ds *Dataset) Next() (*Item, error) {
 	line, _, err := ds.reader.ReadLine()
 	if err == io.EOF {
+		ds.file.Close()
 		return nil, err
 	}
 	if err != nil {
