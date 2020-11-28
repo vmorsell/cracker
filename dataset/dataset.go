@@ -69,7 +69,15 @@ func (ds *Dataset) Next() (*Item, error) {
 
 	record := bytes.Split(line, delimiter)
 
-	hash, err := decodeHex(record[0])
+	var hexHash, salt []byte
+	hexHash = record[0]
+
+	// Use salt if present in the dataset
+	if len(record) == 2 {
+		salt = record[1]
+	}
+
+	hash, err := decodeHex(hexHash)
 	if err != nil {
 		return nil, fmt.Errorf("decodeHex: %w", err)
 	}
@@ -77,7 +85,7 @@ func (ds *Dataset) Next() (*Item, error) {
 	ds.LinesRead++
 	return &Item{
 		Hash: hash,
-		Salt: record[1],
+		Salt: salt,
 	}, nil
 }
 
