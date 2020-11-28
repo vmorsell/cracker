@@ -31,7 +31,6 @@ var bfCrack = &cli.Command{
 		&cli.BoolFlag{
 			Name:    "lowercase",
 			Aliases: []string{"lc"},
-			Value:   true,
 		},
 		&cli.BoolFlag{
 			Name:    "uppercase",
