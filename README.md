@@ -21,7 +21,7 @@ $ go get github.com/vmorsell/cracker
 All commands has the following structure:
 
 ```
-$ cracker <command> [command options]
+$ cracker [global options] <command> [command options]
 ```
 
 For example, brute force cracking a file of passwords named db.csv with combinations of lowercase letters and numbers with a length of max 5 is done with the following command:
