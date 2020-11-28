@@ -62,7 +62,7 @@ var dictCrack = &cli.Command{
 			}
 
 			fmt.Printf("%s     ", shortHash(item.Hash))
-			res := di.Crack(item.Hash, s)
+			res := di.Crack(item.Hash, item.Salt, s)
 			if !res.Ok {
 				fmt.Println("no match")
 				continue

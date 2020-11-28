@@ -31,7 +31,7 @@ type Result struct {
 	Time     time.Duration
 }
 
-func (b *Bruteforce) Crack(hash []byte, s *Strategy) *Result {
+func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
 
 	var chars []byte
@@ -53,7 +53,8 @@ func (b *Bruteforce) Crack(hash []byte, s *Strategy) *Result {
 
 	i := 1
 	for {
-		x := s.Cipher.Hash(curr)
+		salted := append(curr, salt...)
+		x := s.Cipher.Hash(salted)
 		if bytes.Equal(hash, x) {
 			time := time.Now().Sub(start)
 			return &Result{

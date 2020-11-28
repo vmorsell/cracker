@@ -20,11 +20,12 @@ type Result struct {
 }
 
 // Crack tries to find the original password using the loaded dictionary
-func (d *Dictionary) Crack(hash []byte, s *Strategy) *Result {
+func (d *Dictionary) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
 
 	for i, w := range d.Words {
-		h := s.Cipher.Hash(w)
+		salted := append(w, salt...)
+		h := s.Cipher.Hash(salted)
 		if bytes.Equal(hash, h) {
 			time := time.Now().Sub(start)
 			return &Result{
