@@ -24,7 +24,7 @@ All commands has the following structure:
 $ cracker <command> [command options]
 ```
 
-For example, brute force cracking a file of passwords named db.csv with combinations of lowercase letters and numbers with a length of max 5 is done with the following command:
+For example, the following command attempts to crack the hashes in the file `db.csv` using brute force. The guessed passphrases can have numbers and lowercase letters, and a max length of `5`:
 
 ```
 $ cracker bf --hf db.csv --lc --n --max 5
