@@ -13,7 +13,7 @@ Cracker needs Go to run. Install using the [official instructions](https://golan
 The quickest way to install Cracker is using the `go get` command:
 
 ```
-$ go get github.com/vmorsell/cracker
+$ go get -u -v github.com/vmorsell/cracker
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ $ go get github.com/vmorsell/cracker
 All commands has the following structure:
 
 ```
-$ cracker <command> [command options]
+$ cracker [global options] <command> [command options]
 ```
 
 For example, brute force cracking a file of passwords named db.csv with combinations of lowercase letters and numbers with a length of max 5 is done with the following command:
@@ -35,11 +35,11 @@ $ cracker bf --hf db.csv --lc --n --max 5
 To view available commands and general help:
 
 ```
-$ cracker help
+$ cracker --help
 ```
 
 To view documentation for a specific command:
 
 ```
-$ cracker <command> help
+$ cracker <command> --help
 ```
