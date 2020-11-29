@@ -14,18 +14,18 @@ var dictCrack = &cli.Command{
 	Name:      "dictionary",
 	Aliases:   []string{"dict"},
 	Usage:     "Perform a cracking attempt using a dictionary",
-	ArgsUsage: " ",
+	UsageText: "cracker dictionary --hash-file FILE --dictionary-file FILE [options]",
 
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",
 			Aliases:  []string{"hf"},
-			Usage:    "Load hashes from `FILE`",
+			Usage:    "Load hashes from `FILE` (required)",
 			Required: true,
 		},
 		&cli.StringFlag{
 			Name:     "dictionary-file",
-			Usage:    "Load dictionary from `FILE`",
+			Usage:    "Load dictionary from `FILE` (required)",
 			Aliases:  []string{"df"},
 			Required: true,
 		},

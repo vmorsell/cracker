@@ -13,13 +13,13 @@ var bfCrack = &cli.Command{
 	Name:      "bruteforce",
 	Aliases:   []string{"bf"},
 	Usage:     "Perform a cracking attempt using brute force",
-	ArgsUsage: " ",
+	UsageText: "cracker bruteforce --hash-file FILE [options]",
 
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",
 			Aliases:  []string{"hf"},
-			Usage:    "Load hashes from `FILE`",
+			Usage:    "Load hashes from `FILE` (required)",
 			Required: true,
 		},
 		&cli.IntFlag{
