@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/urfave/cli/v2"
@@ -9,6 +10,22 @@ import (
 	"github.com/vmorsell/cracker/dataset"
 	"github.com/vmorsell/cracker/dictionary"
 )
+
+type dictReport struct {
+	Processed int
+	Ok        int
+	Tries     int
+	Duration  time.Duration
+}
+
+func (r *dictReport) AddResult(res *dictionary.Result) {
+	r.Processed++
+	if res.Ok {
+		r.Ok++
+	}
+	r.Tries += res.Tries
+	r.Duration = r.Duration + res.Duration
+}
 
 var dictCrack = &cli.Command{
 	Name:    "dictionary",
@@ -37,13 +54,13 @@ var dictCrack = &cli.Command{
 		}
 
 		fmt.Print("Loading dictionary... ")
-		t0 := time.Now()
+		diT0 := time.Now()
 		di, err := dictionary.New(c.String("dictionary-file"))
 		if err != nil {
 			return err
 		}
-		t := time.Now().Sub(t0)
-		fmt.Printf("done. (%d words in %f seconds)\n", len(di.Words), t.Seconds())
+		diT := time.Now().Sub(diT0)
+		fmt.Printf("done. (%d words in %f seconds)\n", len(di.Words), diT.Seconds())
 
 		cipher, err := cipherlib.NewSha2(256)
 		if err != nil {
@@ -54,6 +71,7 @@ var dictCrack = &cli.Command{
 			Cipher: cipher,
 		}
 
+		report := &dictReport{}
 		fmt.Println("Starting Dictionary attack...")
 		for ds.HasNext() {
 			item, err := ds.Next()
@@ -63,14 +81,41 @@ var dictCrack = &cli.Command{
 
 			fmt.Printf("%s     ", shortHash(item.Hash))
 			res := di.Crack(item.Hash, item.Salt, s)
+
+			report.AddResult(res)
 			if !res.Ok {
 				fmt.Println("no match")
 				continue
 			}
 
-			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Time.Seconds(), res.Tries)
+			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Duration.Seconds(), res.Tries)
 		}
-		fmt.Println("Done.")
+		fmt.Printf("Done in %.1f seconds.\n\n", report.Duration.Seconds())
+
+		v := reflect.ValueOf(*s)
+		typ := reflect.TypeOf(*s)
+		for i := 0; i < v.NumField(); i++ {
+			fmt.Printf("%-20s%v\n", typ.Field(i).Name, v.Field(i).Interface())
+		}
+
+		fmt.Printf("\n%-20s%d\n%-20s%.1f %s\n",
+			"Words",
+			len(di.Words),
+			"Loading duration",
+			diT.Seconds(),
+			"s",
+		)
+
+		fmt.Printf("\n%-20s%d\n%-20s%d (%.1f %%)\n%-20s%.0f %s\n",
+			"Processed",
+			report.Processed,
+			"Cracked",
+			report.Ok,
+			float64(report.Ok)/float64(report.Processed)*100,
+			"Hash rate (avg)",
+			float64(report.Tries)/report.Duration.Seconds(),
+			"h/s",
+		)
 		return nil
 	},
 }

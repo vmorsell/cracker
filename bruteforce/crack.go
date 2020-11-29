@@ -31,7 +31,7 @@ type Result struct {
 	Hash     []byte
 	Password []byte
 	Tries    int
-	Time     time.Duration
+	Duration time.Duration
 }
 
 // Crack executes a Brute Force attack
@@ -62,13 +62,13 @@ func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 			salted := append(curr, salt...)
 			x := s.Cipher.Hash(salted)
 			if bytes.Equal(hash, x) {
-				time := time.Now().Sub(start)
+				duration := time.Now().Sub(start)
 				return &Result{
 					Ok:       true,
 					Hash:     hash,
 					Password: curr,
 					Tries:    i,
-					Time:     time,
+					Duration: duration,
 				}
 			}
 		}
@@ -95,10 +95,10 @@ func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	}
 
 	// No match
-	time := time.Now().Sub(start)
+	duration := time.Now().Sub(start)
 	return &Result{
-		Ok:    false,
-		Tries: i,
-		Time:  time,
+		Ok:       false,
+		Tries:    i,
+		Duration: duration,
 	}
 }
