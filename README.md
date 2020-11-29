@@ -13,7 +13,7 @@ Cracker needs Go to run. Install using the [official instructions](https://golan
 The quickest way to install Cracker is using the `go get` command:
 
 ```
-$ go get github.com/vmorsell/cracker
+$ go get -u -v github.com/vmorsell/cracker
 ```
 
 ## Usage
