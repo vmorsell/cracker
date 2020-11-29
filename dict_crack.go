@@ -24,7 +24,7 @@ func (r *dictReport) AddResult(res *dictionary.Result) {
 		r.Ok++
 	}
 	r.Tries += res.Tries
-	r.Duration = r.Duration + res.Time
+	r.Duration = r.Duration + res.Duration
 }
 
 var dictCrack = &cli.Command{
@@ -88,7 +88,7 @@ var dictCrack = &cli.Command{
 				continue
 			}
 
-			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Time.Seconds(), res.Tries)
+			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Duration.Seconds(), res.Tries)
 		}
 		fmt.Printf("Done in %.1f seconds.\n\n", report.Duration.Seconds())
 

@@ -24,7 +24,7 @@ func (r *bfReport) AddResult(res *bruteforce.Result) {
 		r.Ok++
 	}
 	r.Tries += res.Tries
-	r.Duration = r.Duration + res.Time
+	r.Duration = r.Duration + res.Duration
 }
 
 var bfCrack = &cli.Command{
@@ -104,7 +104,7 @@ var bfCrack = &cli.Command{
 				fmt.Println("no match")
 				continue
 			}
-			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Time.Seconds(), res.Tries)
+			fmt.Printf("%s (%f s, %d tries)\n", res.Password, res.Duration.Seconds(), res.Tries)
 		}
 		fmt.Printf("Done in %.1f seconds.\n\n", report.Duration.Seconds())
 
