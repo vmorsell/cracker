@@ -13,7 +13,7 @@ var bfCrack = &cli.Command{
 	Name:      "bruteforce",
 	Aliases:   []string{"bf"},
 	Usage:     "Perform a cracking attempt using brute force",
-	ArgsUsage: "",
+	ArgsUsage: " ",
 
 	Flags: []cli.Flag{
 		&cli.StringFlag{

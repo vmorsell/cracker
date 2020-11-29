@@ -14,7 +14,7 @@ var dictCrack = &cli.Command{
 	Name:      "dictionary",
 	Aliases:   []string{"dict"},
 	Usage:     "Perform a cracking attempt using a dictionary",
-	ArgsUsage: "",
+	ArgsUsage: " ",
 
 	Flags: []cli.Flag{
 		&cli.StringFlag{
