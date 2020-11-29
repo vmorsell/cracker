@@ -7,10 +7,12 @@ import (
 	"github.com/vmorsell/cracker/cipherlib"
 )
 
+// Strategy defines options for the cracking method
 type Strategy struct {
 	Cipher cipherlib.Interface
 }
 
+// Result is the attack output
 type Result struct {
 	Ok       bool
 	Hash     []byte

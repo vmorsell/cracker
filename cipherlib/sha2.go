@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// Sha2 is the main struct for the Sha2 cipher
 type Sha2 struct {
 	Bits int
 }
@@ -14,6 +15,7 @@ var _ Interface = &Sha2{}
 
 var bitsizes = []int{224, 256, 384, 512}
 
+// NewSha2 returns a Sha2 struct for the selected bitsize
 func NewSha2(bits int) (*Sha2, error) {
 	for _, v := range bitsizes {
 		if bits == v {
