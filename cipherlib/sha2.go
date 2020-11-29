@@ -27,7 +27,7 @@ func NewSha2(bits int) (*Sha2, error) {
 	return nil, fmt.Errorf("invalid bitsize")
 }
 
-// Hash returs the digest for the chosen bitsize
+// Hash returns the Sha2 digest
 func (s *Sha2) Hash(in []byte) []byte {
 	switch s.Bits {
 	case 224:

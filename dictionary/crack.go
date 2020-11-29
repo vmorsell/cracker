@@ -21,7 +21,7 @@ type Result struct {
 	Time     time.Duration
 }
 
-// Crack tries to find the original password using the loaded dictionary
+// Crack executes a Dictionary attack
 func (d *Dictionary) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
 
