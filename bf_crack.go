@@ -32,6 +32,7 @@ var bfCrack = &cli.Command{
 			Name:    "min-length",
 			Aliases: []string{"min"},
 			Usage:   "Min length of password candidate",
+			Value:   1,
 		},
 		&cli.StringFlag{
 			Name:    "cipher",
