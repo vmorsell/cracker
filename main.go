@@ -9,15 +9,14 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name: "cracker",
+		Name: "Cracker",
 		Authors: []*cli.Author{
 			&cli.Author{
 				Name:  "Viktor Mörsell",
 				Email: "viktor.morsell@protonmail.ch",
 			},
 		},
-		Usage:                "crack password hashes",
-		EnableBashCompletion: true,
+		Usage: "Crack password hashes",
 		Commands: []*cli.Command{
 			bfCrack,
 			dictCrack,
