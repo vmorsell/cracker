@@ -28,23 +28,29 @@ func (r *dictReport) AddResult(res *dictionary.Result) {
 }
 
 var dictCrack = &cli.Command{
-	Name:    "dictionary",
-	Aliases: []string{"dict"},
-	Usage:   "crack password hashes using a dictionary",
+	Name:      "dictionary",
+	Aliases:   []string{"dict"},
+	Usage:     "Perform a cracking attempt using a dictionary",
+	UsageText: "cracker dictionary --hash-file FILE --dictionary-file FILE [options]",
+
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",
 			Aliases:  []string{"hf"},
+			Usage:    "Load hashes from `FILE` (required)",
 			Required: true,
 		},
 		&cli.StringFlag{
 			Name:     "dictionary-file",
+			Usage:    "Load dictionary from `FILE` (required)",
 			Aliases:  []string{"df"},
 			Required: true,
 		},
 		&cli.StringFlag{
-			Name:  "cipher",
-			Value: "sha256",
+			Name:    "cipher",
+			Aliases: []string{"c"},
+			Usage:   "Use cipher `NAME`",
+			Value:   "sha256",
 		},
 	},
 	Action: func(c *cli.Context) error {

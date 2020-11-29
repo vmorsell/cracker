@@ -28,42 +28,54 @@ func (r *bfReport) AddResult(res *bruteforce.Result) {
 }
 
 var bfCrack = &cli.Command{
-	Name:    "bruteforce",
-	Aliases: []string{"bf"},
-	Usage:   "crack password hashes using brute force",
+	Name:      "bruteforce",
+	Aliases:   []string{"bf"},
+	Usage:     "Perform a cracking attempt using brute force",
+	UsageText: "cracker bruteforce --hash-file FILE [options]",
+
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",
 			Aliases:  []string{"hf"},
+			Usage:    "Load hashes from `FILE` (required)",
 			Required: true,
 		},
 		&cli.IntFlag{
 			Name:    "max-length",
 			Aliases: []string{"max"},
+			Usage:   "Max length of password candidate",
 			Value:   4,
 		},
 		&cli.IntFlag{
 			Name:    "min-length",
 			Aliases: []string{"min"},
+			Usage:   "Min length of password candidate",
+			Value:   1,
 		},
 		&cli.StringFlag{
-			Name:  "cipher",
-			Value: "sha256",
+			Name:    "cipher",
+			Aliases: []string{"c"},
+			Usage:   "Use cipher `NAME`",
+			Value:   "sha256",
 		},
 		&cli.BoolFlag{
 			Name:    "lowercase",
+			Usage:   "Use lowercase letters",
 			Aliases: []string{"lc"},
 		},
 		&cli.BoolFlag{
 			Name:    "uppercase",
+			Usage:   "Use uppercase letters",
 			Aliases: []string{"uc"},
 		},
 		&cli.BoolFlag{
 			Name:    "numbers",
+			Usage:   "Use numbers",
 			Aliases: []string{"n"},
 		},
 		&cli.BoolFlag{
 			Name:    "symbols",
+			Usage:   "Use special characters",
 			Aliases: []string{"s"},
 		},
 	},
