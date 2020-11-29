@@ -20,16 +20,20 @@ var dictCrack = &cli.Command{
 		&cli.StringFlag{
 			Name:     "hash-file",
 			Aliases:  []string{"hf"},
+			Usage:    "Load hashes from `FILE`",
 			Required: true,
 		},
 		&cli.StringFlag{
 			Name:     "dictionary-file",
+			Usage:    "Load dictionary from `FILE`",
 			Aliases:  []string{"df"},
 			Required: true,
 		},
 		&cli.StringFlag{
-			Name:  "cipher",
-			Value: "sha256",
+			Name:    "cipher",
+			Aliases: []string{"c"},
+			Usage:   "Use cipher `NAME`",
+			Value:   "sha256",
 		},
 	},
 	Action: func(c *cli.Context) error {
