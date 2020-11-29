@@ -7,10 +7,12 @@ import (
 	"github.com/vmorsell/cracker/cipherlib"
 )
 
+// Strategy defines options for the cracking method
 type Strategy struct {
 	Cipher cipherlib.Interface
 }
 
+// Result is the attack output
 type Result struct {
 	Ok       bool
 	Hash     []byte
@@ -19,7 +21,7 @@ type Result struct {
 	Time     time.Duration
 }
 
-// Crack tries to find the original password using the loaded dictionary
+// Crack executes a Dictionary attack
 func (d *Dictionary) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
 

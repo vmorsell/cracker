@@ -8,16 +8,19 @@ import (
 	"os"
 )
 
+// Interface defines the public API exposed by Dictionary
 type Interface interface {
 	Crack(hash []byte, salt []byte, s *Strategy) *Result
 }
 
+// Dictionary is the main struct
 type Dictionary struct {
 	Words [][]byte
 }
 
 var _ Interface = &Dictionary{}
 
+// New loads a dictionary file and returns a Dictionary struct
 func New(src string) (*Dictionary, error) {
 	if src == "" {
 		return nil, errors.New("missing src")

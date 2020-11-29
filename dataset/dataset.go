@@ -10,11 +10,13 @@ import (
 	"os"
 )
 
+// Interface defines the public API exposed by Dataset
 type Interface interface {
 	HasNext() bool
 	Next() (*Item, error)
 }
 
+// Dataset is the main struct
 type Dataset struct {
 	LinesRead int
 	file      *os.File
@@ -25,6 +27,7 @@ var _ Interface = &Dataset{}
 
 var delimiter = []byte(",")
 
+// New creates a reader for the dataset file and returns a Dataset struct
 func New(src string) (*Dataset, error) {
 	if src == "" {
 		return nil, errors.New("missing src")
@@ -43,6 +46,7 @@ func New(src string) (*Dataset, error) {
 	}, nil
 }
 
+// HasNext returns true if there's unread data left in the dataset
 func (ds *Dataset) HasNext() bool {
 	_, err := ds.reader.Peek(1)
 	if err != nil {
@@ -52,11 +56,13 @@ func (ds *Dataset) HasNext() bool {
 	return true
 }
 
+// Item is the model of a record in the dataset
 type Item struct {
 	Hash []byte
 	Salt []byte
 }
 
+// Next returns the next record from the dataset
 func (ds *Dataset) Next() (*Item, error) {
 	line, _, err := ds.reader.ReadLine()
 	if err == io.EOF {
