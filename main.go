@@ -22,7 +22,8 @@ func main() {
 				Email: "viktor.morsell@protonmail.ch",
 			},
 		},
-		Usage: "Brute force cracking of hashes",
+		Usage:           "Brute force cracking of hashes",
+		HideHelpCommand: true,
 		Commands: []*cli.Command{
 			bfCrack,
 			dictCrack,
