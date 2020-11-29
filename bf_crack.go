@@ -10,9 +10,11 @@ import (
 )
 
 var bfCrack = &cli.Command{
-	Name:    "bruteforce",
-	Aliases: []string{"bf"},
-	Usage:   "crack password hashes using brute force",
+	Name:      "bruteforce",
+	Aliases:   []string{"bf"},
+	Usage:     "Performs Brute Force cracking",
+	ArgsUsage: "",
+
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",

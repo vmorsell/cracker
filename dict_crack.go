@@ -11,9 +11,11 @@ import (
 )
 
 var dictCrack = &cli.Command{
-	Name:    "dictionary",
-	Aliases: []string{"dict"},
-	Usage:   "crack password hashes using a dictionary",
+	Name:      "dictionary",
+	Aliases:   []string{"dict"},
+	Usage:     "Performs Dictionary attack cracking",
+	ArgsUsage: "",
+
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:     "hash-file",
