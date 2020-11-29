@@ -23,6 +23,7 @@ func main() {
 			},
 		},
 		Usage:           "Brute force cracking of hashes",
+		UsageText:       "cracker <command> [command options]",
 		HideHelpCommand: true,
 		Commands: []*cli.Command{
 			bfCrack,
