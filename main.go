@@ -8,15 +8,21 @@ import (
 )
 
 func main() {
+	cli.HelpFlag = &cli.BoolFlag{
+		Name:    "help",
+		Aliases: []string{"h"},
+		Usage:   "Show help",
+	}
+
 	app := &cli.App{
-		Name: "Cracker",
+		Name: "cracker",
 		Authors: []*cli.Author{
 			&cli.Author{
 				Name:  "Viktor Mörsell",
 				Email: "viktor.morsell@protonmail.ch",
 			},
 		},
-		Usage: "Crack password hashes",
+		Usage: "Brute force cracking of hashes",
 		Commands: []*cli.Command{
 			bfCrack,
 			dictCrack,

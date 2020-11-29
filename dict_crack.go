@@ -13,7 +13,7 @@ import (
 var dictCrack = &cli.Command{
 	Name:      "dictionary",
 	Aliases:   []string{"dict"},
-	Usage:     "Performs Dictionary attack cracking",
+	Usage:     "Perform a cracking attempt using a dictionary",
 	ArgsUsage: "",
 
 	Flags: []cli.Flag{
