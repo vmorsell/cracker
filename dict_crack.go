@@ -9,19 +9,24 @@ import (
 	"github.com/vmorsell/cracker/cipherlib"
 	"github.com/vmorsell/cracker/dataset"
 	"github.com/vmorsell/cracker/dictionary"
+	"github.com/vmorsell/cracker/digestcache"
 )
 
 type dictReport struct {
-	Processed int
-	Ok        int
-	Tries     int
-	Duration  time.Duration
+	Processed    int
+	Ok           int
+	Tries        int
+	OkUsingCache int
+	Duration     time.Duration
 }
 
 func (r *dictReport) AddResult(res *dictionary.Result) {
 	r.Processed++
 	if res.Ok {
 		r.Ok++
+	}
+	if res.UsedCache {
+		r.OkUsingCache++
 	}
 	r.Tries += res.Tries
 	r.Duration = r.Duration + res.Duration
@@ -52,6 +57,10 @@ var dictCrack = &cli.Command{
 			Usage:   "Use cipher `NAME`",
 			Value:   "sha256",
 		},
+		&cli.BoolFlag{
+			Name:  "cache",
+			Usage: "Use digest cache",
+		},
 	},
 	Action: func(c *cli.Context) error {
 		ds, err := dataset.New(c.String("hash-file"))
@@ -73,8 +82,14 @@ var dictCrack = &cli.Command{
 			return err
 		}
 
+		var cache *digestcache.DigestCache = nil
+		if c.Bool("cache") {
+			cache = digestcache.New()
+		}
+
 		s := &dictionary.Strategy{
 			Cipher: cipher,
+			Cache:  cache,
 		}
 
 		report := &dictReport{}
@@ -112,12 +127,15 @@ var dictCrack = &cli.Command{
 			"s",
 		)
 
-		fmt.Printf("\n%-20s%d\n%-20s%d (%.1f %%)\n%-20s%.0f %s\n",
+		fmt.Printf("\n%-20s%d\n%-20s%d (%.1f %%)\n%-20s%d (%.1f %%)\n%-20s%.0f %s\n",
 			"Processed",
 			report.Processed,
 			"Cracked",
 			report.Ok,
 			float64(report.Ok)/float64(report.Processed)*100,
+			"...using cache",
+			report.OkUsingCache,
+			float64(report.OkUsingCache)/float64(report.Ok)*100,
 			"Hash rate (avg)",
 			float64(report.Tries)/report.Duration.Seconds(),
 			"h/s",
