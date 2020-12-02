@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/vmorsell/cracker/cipherlib"
+	"github.com/vmorsell/cracker/digestcache"
 )
 
 var (
@@ -23,20 +24,36 @@ type Strategy struct {
 	Special   bool
 	Min       int
 	Max       int
+	Cache     *digestcache.DigestCache
 }
 
 // Result is the attack output
 type Result struct {
-	Ok       bool
-	Hash     []byte
-	Password []byte
-	Tries    int
-	Duration time.Duration
+	Ok        bool
+	Hash      []byte
+	Password  []byte
+	Tries     int
+	UsedCache bool
+	Duration  time.Duration
 }
 
 // Crack executes a Brute Force attack
 func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
+
+	if s.Cache != nil {
+		if cached := s.Cache.Lookup(hash); cached != nil {
+			duration := time.Now().Sub(start)
+			return &Result{
+				Ok:        true,
+				Hash:      hash,
+				Password:  cached,
+				Tries:     1,
+				UsedCache: true,
+				Duration:  duration,
+			}
+		}
+	}
 
 	var chars []byte
 	if s.Lowercase {
@@ -63,6 +80,11 @@ func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 			x := s.Cipher.Hash(salted)
 			if bytes.Equal(hash, x) {
 				duration := time.Now().Sub(start)
+
+				if s.Cache != nil {
+					s.Cache.Add(hash, curr)
+				}
+
 				return &Result{
 					Ok:       true,
 					Hash:     hash,

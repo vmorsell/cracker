@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/vmorsell/cracker/digestcache"
+
 	"github.com/urfave/cli/v2"
 	"github.com/vmorsell/cracker/bruteforce"
 	"github.com/vmorsell/cracker/cipherlib"
@@ -12,16 +14,20 @@ import (
 )
 
 type bfReport struct {
-	Processed int
-	Ok        int
-	Tries     int
-	Duration  time.Duration
+	Processed    int
+	Ok           int
+	Tries        int
+	OkUsingCache int
+	Duration     time.Duration
 }
 
 func (r *bfReport) AddResult(res *bruteforce.Result) {
 	r.Processed++
 	if res.Ok {
 		r.Ok++
+	}
+	if res.UsedCache {
+		r.OkUsingCache++
 	}
 	r.Tries += res.Tries
 	r.Duration = r.Duration + res.Duration
@@ -78,6 +84,10 @@ var bfCrack = &cli.Command{
 			Usage:   "Use special characters",
 			Aliases: []string{"s"},
 		},
+		&cli.BoolFlag{
+			Name:  "cache",
+			Usage: "Use digest cache",
+		},
 	},
 	Action: func(c *cli.Context) error {
 		ds, err := dataset.New(c.String("hash-file"))
@@ -90,6 +100,12 @@ var bfCrack = &cli.Command{
 		if err != nil {
 			return err
 		}
+
+		var cache *digestcache.DigestCache = nil
+		if c.Bool("cache") {
+			cache = digestcache.New()
+		}
+
 		s := &bruteforce.Strategy{
 			Cipher:    cipher,
 			Uppercase: c.Bool("uppercase"),
@@ -98,6 +114,7 @@ var bfCrack = &cli.Command{
 			Special:   c.Bool("special"),
 			Min:       c.Int("min-length"),
 			Max:       c.Int("max-length"),
+			Cache:     cache,
 		}
 
 		report := &bfReport{}
@@ -126,12 +143,15 @@ var bfCrack = &cli.Command{
 			fmt.Printf("%-20s%v\n", typ.Field(i).Name, v.Field(i).Interface())
 		}
 
-		fmt.Printf("\n%-20s%d\n%-20s%d (%.1f %%)\n%-20s%.0f %s\n",
+		fmt.Printf("\n%-20s%d\n%-20s%d (%.1f %%)\n%-20s%d (%.1f %%)\n%-20s%.0f %s\n",
 			"Processed",
 			report.Processed,
 			"Cracked",
 			report.Ok,
 			float64(report.Ok)/float64(report.Processed)*100,
+			"...using cache",
+			report.OkUsingCache,
+			float64(report.OkUsingCache)/float64(report.Ok)*100,
 			"Hash rate (avg)",
 			float64(report.Tries)/report.Duration.Seconds(),
 			"h/s",
