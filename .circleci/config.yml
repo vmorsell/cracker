@@ -1,0 +1,44 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  lint:
+    docker:
+      - image: circleci/golang:1.15.4-buster
+    steps:
+      - checkout
+      - run:
+          name: install modules
+          command: go get -v -t -d ./...
+      - run:
+          name: install golint
+          command: go get -u golang.org/x/lint/golint
+      - run:
+          name: golint
+          command: golint ./...
+  test:
+    docker:
+      - image: circleci/golang:1.15.4-buster
+    steps:
+      - checkout
+      - run:
+          name: go test
+          command: go test -v ./...
+
+  build:
+    docker:
+      - image: circleci/golang:1.15.4-buster
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run:
+          command: go build -v ./...
+
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - lint
+      - test
+      - build
