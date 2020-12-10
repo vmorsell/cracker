@@ -1,5 +1,4 @@
-// Package main holds logic for Cracker Command Line tool.
-// Refer to the subpackages for more details about how the tool works.
+// Command line tool for Brute Force cracking of hashes.
 package main
 
 import (
