@@ -1,5 +1,8 @@
 # Cracker
 
+[![CircleCI](https://circleci.com/gh/vmorsell/cracker.svg?style=shield)](https://circleci.com/gh/vmorsell/cracker)
+[![Go Reference](https://pkg.go.dev/badge/github.com/vmorsell/cracker.svg)](https://pkg.go.dev/github.com/vmorsell/cracker)
+
 `cracker` is a command line tool for demonstrating offline Brute Force and Dictionary attacks.
 
 ## Getting started
