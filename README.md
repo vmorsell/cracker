@@ -1,5 +1,7 @@
 # Cracker
 
+[![CircleCI](https://circleci.com/gh/vmorsell/cracker.svg?style=shield)](https://circleci.com/gh/vmorsell/cracker)
+
 `cracker` is a command line tool for demonstrating offline Brute Force and Dictionary attacks.
 
 ## Getting started
