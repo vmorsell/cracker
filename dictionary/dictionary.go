@@ -1,3 +1,4 @@
+// Package dictionary holds logic for Dictionary cracking attacks.
 package dictionary
 
 import (
@@ -8,19 +9,19 @@ import (
 	"os"
 )
 
-// Interface defines the public API exposed by Dictionary
+// Interface defines the public API for Dictionary.
 type Interface interface {
 	Crack(hash []byte, salt []byte, s *Strategy) *Result
 }
 
-// Dictionary is the main struct
+// Dictionary is the negine for the Dictionary attack.
 type Dictionary struct {
 	Words [][]byte
 }
 
 var _ Interface = &Dictionary{}
 
-// New loads a dictionary file and returns a Dictionary struct
+// New creates a *Dictionary struct from a dictionary file source.
 func New(src string) (*Dictionary, error) {
 	if src == "" {
 		return nil, errors.New("missing src")

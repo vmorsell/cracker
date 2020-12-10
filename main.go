@@ -1,3 +1,4 @@
+// Command line tool for Brute Force cracking of hashes.
 package main
 
 import (

@@ -1,19 +1,20 @@
+// Package digestcache handles cipher digest caching.
 package digestcache
 
-// Interface defines the public API exposed by this package
+// Interface defines the public API for DigestCache.
 type Interface interface {
 	Add(hash []byte, text []byte)
 	Lookup(hash []byte) []byte
 }
 
-// DigestCache is the main struct
+// DigestCache holds the cache data and logic.
 type DigestCache struct {
 	Records map[string][]byte
 }
 
 var _ Interface = &DigestCache{}
 
-// New returns a pointer to a DigestCache struct
+// New creates a *DigestCache struct.
 func New() *DigestCache {
 	r := make(map[string][]byte)
 	return &DigestCache{
@@ -21,12 +22,12 @@ func New() *DigestCache {
 	}
 }
 
-// Add inserts a record to the cache
+// Add inserts a record to the cache.
 func (dc *DigestCache) Add(hash []byte, text []byte) {
 	dc.Records[string(hash)] = text
 }
 
-// Lookup finds and returns a record from the cache
+// Lookup finds and returns a record from the cache.
 func (dc *DigestCache) Lookup(hash []byte) []byte {
 	if r, ok := dc.Records[string(hash)]; ok {
 		return r
