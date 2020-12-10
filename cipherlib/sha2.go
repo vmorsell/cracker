@@ -6,7 +6,10 @@ import (
 	"fmt"
 )
 
-// Sha2 is the main struct for the Sha2 cipher
+// Sha2 represents the SHA2 cipher method.
+//
+// Note that the zero value for Sha2 is not a valid configuration. Create a
+// Sha2 struct using New().
 type Sha2 struct {
 	Bits int
 }
@@ -15,7 +18,7 @@ var _ Interface = &Sha2{}
 
 var bitsizes = []int{224, 256, 384, 512}
 
-// NewSha2 returns a Sha2 struct for the selected bitsize
+// NewSha2 creates a *Sha2 struct from a cipher bitsize.
 func NewSha2(bits int) (*Sha2, error) {
 	for _, v := range bitsizes {
 		if bits == v {
@@ -27,7 +30,7 @@ func NewSha2(bits int) (*Sha2, error) {
 	return nil, fmt.Errorf("invalid bitsize")
 }
 
-// Hash returns the Sha2 digest
+// Hash calculates the SHA2 digest.
 func (s *Sha2) Hash(in []byte) []byte {
 	switch s.Bits {
 	case 224:

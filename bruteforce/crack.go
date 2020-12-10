@@ -15,7 +15,7 @@ var (
 	special   = []byte("!@#$%&.:,;-_")
 )
 
-// Strategy defines options for the cracking method
+// Strategy defines options for the cracking.
 type Strategy struct {
 	Cipher    cipherlib.Interface
 	Lowercase bool
@@ -27,7 +27,7 @@ type Strategy struct {
 	Cache     *digestcache.DigestCache
 }
 
-// Result is the attack output
+// Result represents the attack output.
 type Result struct {
 	Ok        bool
 	Hash      []byte
@@ -37,7 +37,7 @@ type Result struct {
 	Duration  time.Duration
 }
 
-// Crack executes a Brute Force attack
+// Crack executes a Brute Force attack.
 func (b *Bruteforce) Crack(hash []byte, salt []byte, s *Strategy) *Result {
 	start := time.Now()
 
