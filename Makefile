@@ -1,4 +1,4 @@
-.PHONY: all build test
+.PHONY: all lint test build install
 
 all: lint test build
 
