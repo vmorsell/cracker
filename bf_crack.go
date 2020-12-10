@@ -96,7 +96,7 @@ var bfCrack = &cli.Command{
 		}
 
 		bf := bruteforce.New()
-		cipher, err := cipherlib.NewSha2(256)
+		cipher, err := cipherlib.NewSHA2(256)
 		if err != nil {
 			return err
 		}

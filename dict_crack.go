@@ -77,7 +77,7 @@ var dictCrack = &cli.Command{
 		diT := time.Now().Sub(diT0)
 		fmt.Printf("done. (%d words in %f seconds)\n", len(di.Words), diT.Seconds())
 
-		cipher, err := cipherlib.NewSha2(256)
+		cipher, err := cipherlib.NewSHA2(256)
 		if err != nil {
 			return err
 		}
