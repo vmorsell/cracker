@@ -9,7 +9,7 @@ import (
 
 	"github.com/urfave/cli/v2"
 	"github.com/vmorsell/cracker/bruteforce"
-	"github.com/vmorsell/cracker/cipherlib"
+	"github.com/vmorsell/cracker/cipherlib/sha2"
 	"github.com/vmorsell/cracker/dataset"
 )
 
@@ -96,7 +96,7 @@ var bfCrack = &cli.Command{
 		}
 
 		bf := bruteforce.New()
-		cipher, err := cipherlib.NewSHA2(256)
+		cipher, err := sha2.New(256)
 		if err != nil {
 			return err
 		}
