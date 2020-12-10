@@ -16,11 +16,12 @@ type Sha2 struct {
 
 var _ Interface = &Sha2{}
 
-var bitsizes = []int{224, 256, 384, 512}
+// Bitsizes defines the valid SHA2 bitsizes.
+var Bitsizes = []int{224, 256, 384, 512}
 
 // NewSha2 creates a *Sha2 struct from a cipher bitsize.
 func NewSha2(bits int) (*Sha2, error) {
-	for _, v := range bitsizes {
+	for _, v := range Bitsizes {
 		if bits == v {
 			return &Sha2{
 				Bits: v,
