@@ -1,3 +1,4 @@
+// Package dictionary holds logic for Dictionary cracking attacks.
 package dictionary
 
 import (

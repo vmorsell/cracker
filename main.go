@@ -1,3 +1,5 @@
+// Package main holds logic for Cracker Command Line tool.
+// Refer to the subpackages for more details about how the tool works.
 package main
 
 import (

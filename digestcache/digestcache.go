@@ -1,3 +1,4 @@
+// Package digestcache handles cipher digest caching.
 package digestcache
 
 // Interface defines the public API exposed by this package

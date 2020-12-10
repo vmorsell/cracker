@@ -1,3 +1,4 @@
+// Package bruteforce holds logic for Brute Force cracking attacks.
 package bruteforce
 
 // Interface defines the public API exposed by this package

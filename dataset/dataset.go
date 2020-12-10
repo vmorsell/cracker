@@ -1,3 +1,4 @@
+// Package dataset handles opening and streaming of hash datasets.
 package dataset
 
 import (
