@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/vmorsell/cracker/cipherlib"
+	"github.com/vmorsell/cracker/cipherlib/sha2"
 )
 
 func TestCrack(t *testing.T) {
 	d := &Dictionary{}
-	cipher, err := cipherlib.NewSHA2(256)
+	cipher, err := sha2.New(256)
 	if err != nil {
 		t.Fatalf("cipher: %s", err)
 	}

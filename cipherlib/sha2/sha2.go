@@ -1,9 +1,12 @@
-package cipherlib
+// Package sha2 holds logic for SHA2 hashing.
+package sha2
 
 import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"fmt"
+
+	"github.com/vmorsell/cracker/cipherlib"
 )
 
 // SHA2 represents the SHA2 cipher method.
@@ -14,13 +17,13 @@ type SHA2 struct {
 	Bits int
 }
 
-var _ Interface = &SHA2{}
+var _ cipherlib.Interface = &SHA2{}
 
 // Bitsizes defines the valid SHA2 bitsizes.
 var Bitsizes = []int{224, 256, 384, 512}
 
-// NewSHA2 creates a *SHA2 struct from a cipher bitsize.
-func NewSHA2(bits int) (*SHA2, error) {
+// New creates a *SHA2 struct from a cipher bitsize.
+func New(bits int) (*SHA2, error) {
 	for _, v := range Bitsizes {
 		if bits == v {
 			return &SHA2{

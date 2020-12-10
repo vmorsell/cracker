@@ -5,8 +5,9 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/vmorsell/cracker/cipherlib/sha2"
+
 	"github.com/urfave/cli/v2"
-	"github.com/vmorsell/cracker/cipherlib"
 	"github.com/vmorsell/cracker/dataset"
 	"github.com/vmorsell/cracker/dictionary"
 	"github.com/vmorsell/cracker/digestcache"
@@ -77,7 +78,7 @@ var dictCrack = &cli.Command{
 		diT := time.Now().Sub(diT0)
 		fmt.Printf("done. (%d words in %f seconds)\n", len(di.Words), diT.Seconds())
 
-		cipher, err := cipherlib.NewSHA2(256)
+		cipher, err := sha2.New(256)
 		if err != nil {
 			return err
 		}
